@@ -1,0 +1,38 @@
+{% extends "registration/finreg.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+
+{% if form.errors %}
+<p>Ломаешь систему? Ломай её полностью.</p>
+{% endif %}
+
+    {% if user.is_authenticated %}
+        <p> Вы уже подключены к системе {{ user }}.  <a href="/logout">Выйти</a> ? </p>
+
+    {% else %}
+
+<form method="post" action="{% url django.contrib.auth.views.login %}">{% csrf_token %}
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+<p><a href="{% url auth_password_reset %}">Забил</a> паролю?  <a href="{% url registration_register %}">Need an account</a>?</p>
+
+
+<input type="submit" value="login" />
+{#{% if form.as_table.last_name == Null %} #}
+{#    {% else %}#}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="hidden" name="finreg" value="../finreg">
+{#    {% endif %}#}
+
+</form>
+{% endif %}
+{% endblock %}

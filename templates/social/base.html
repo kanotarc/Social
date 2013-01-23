@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+        {% load staticfiles %}
+        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/bootstrap/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/bootstrap/img/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/bootstrap/img/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/bootstrap/img/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/bootstrap/img/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<body>
+<div class="container"></div>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/admin">Админ</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="/">Домой</a></li>
+{#                    <li><a href="#contact">Контакт</a></li>#}
+                    {% block loginblock %}
+                        {% if not user.is_anonymous %}
+                            <li><a href=/accounts/profile>Обо мне</a></li>
+{#                            <li><a href=/friends>Друзья</a></li>#}
+                            <li><a href=/finreg>Ред. профиль</a></li>
+
+                            <li><a href="/logout">Выход</a></li>
+                        {% else %}
+                            <li><a href="/login">Вход</a></li>
+                            <li><a href="/register">Регистрация</a></li>
+
+                        {% endif %}
+                    {% endblock %}
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">{% comment %}LEFT{% endcomment %}
+            {% if not user.is_anonymous %}
+                {% block sidebar %}
+
+                    <div class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            <li class="nav-header">Menu</li>
+                            <li><a href="{% url ser_form %}">Поиск</a></li>
+                            <li {% if list_type == '0' %} class="active" {% endif %} ><a href="{% url friend 0 %}">Друзяки</a></li>
+                            <li {% if list_type == '1' %} class="active" {% endif %}><a href="{% url friend 1 %}">Мои заявки</a></li>
+                            <li {% if list_type == '2' %} class="active" {% endif %}><a href="{% url friend 2 %}">Предложения дружбы</a></li>
+                        </ul>
+                    </div><!--/.well -->
+
+                {% endblock %}
+            {% endif %}
+        </div><!--/span-->
+        <div class="span9">{% comment %}RIGHT{% endcomment %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% block content %}
+                <h3>Здесь могла бы быть ваша реклама</h3>
+                <p>Если Вы попали на эту страницу, это значит что Вас скоро захавает Ктулху<br> Это социальная сеть поклонников Кришны Трисвамипрабхупады. Рама-Рама.</p>
+            {% endblock %}
+        </div><!--/span-->
+    </div><!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>&copy; КВ_Паштет 2013</p>
+    </footer>
+
+</div><!--/.fluid-container-->
+
+
+
+
+
+
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+
+</body>
+</html>

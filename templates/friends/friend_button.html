@@ -1,0 +1,11 @@
+{{ status }}
+{% if status == 1 %}
+    <a href="{% url del_from_friend profile.id  %}">удалить из друзей</a><br>
+    {% elif status == 2 %}
+        <a href="{% url del_from_friend profile.id  %}">отменить заявку</a><br>
+    {% elif status == 3 %}
+        <a href="{% url add_to_friend profile.id  %}">добавить в друзья</a><br>
+        <a href="{% url del_from_friend profile.id  %}">он(а,о) какашка</a><br>
+    {% elif status == 0 %}
+        <a href="{% url add_to_friend profile.id  %}">добавить в друзья</a><br>
+{% endif %}

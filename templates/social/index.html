@@ -1,0 +1,10 @@
+{% extends "social/base.html" %}
+{% block title %}абырвалг
+{% endblock %}
+{% block content %}
+    {% if not user.is_anonymous %}
+        <h1>Привет, {{ user }}!</h1><br>
+    {% endif %}
+
+
+{% endblock %}

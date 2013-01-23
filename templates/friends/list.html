@@ -1,0 +1,44 @@
+{% extends "social/base.html" %}
+
+{% block title %}Кореша {{ user }}{% endblock %}
+{% block head %}Кореша {{ user }}{% endblock %}
+
+{% block content %}
+
+                    <table>
+                    <br>
+
+
+                    {% if list_type == 2 %}
+                        {% for friend in friends %}
+                            <tr height=105>
+                                <td><img src="{% if friend.from_user.get_profile.avatar %}{{ friend.from_user.get_profile.avatar.url }}{% endif %}" width=100 height=100 alt="нет аватара"></td>
+                                <td><a href="/accounts/profile/{{ friend.from_user.id }}">{{ friend.from_user }}</a><br>
+                                    {{ friend.from_user.get_profile.first_name }} {{ friend.from_user.get_profile.last_name }}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            Нет предложений дружбы
+                        {% endfor %}
+
+                    {% else %}
+
+                    {% for friend in friends %}
+                        <tr height=105>
+                            <td><img src="{% if friend.to_user.get_profile.avatar %}{{ friend.to_user.get_profile.avatar.url }}{% endif %}" width=100 height=100 alt="нет аватара"></td>
+                            <td><a href="/accounts/profile/{{ friend.to_user.id }}">{{ friend.to_user }}</a><br>
+                                {{ friend.to_user.get_profile.first_name }} {{ friend.to_user.get_profile.last_name }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        {% if list_type == 0 %}
+                            У вас нет друзей
+                            {% elif list_type == 1 %}
+                                Нет заявок
+                        {% endif %}
+                    {% endfor %}
+
+                    {% endif %}
+                    </table>
+
+{% endblock %}
